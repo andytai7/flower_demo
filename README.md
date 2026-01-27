@@ -7,7 +7,7 @@ A minimal federated learning project to experiment with Flower before implementi
 ```
 flower-fcl-sandbox/
 ├── README.md
-├── requirements.txt
+├── pyproject.toml               # Project config and dependencies
 ├── data/
 │   └── generate_synthetic.py    # Create non-IID synthetic health data
 ├── models/
@@ -15,9 +15,7 @@ flower-fcl-sandbox/
 ├── clients/
 │   └── client.py                # Flower client implementation
 ├── server/
-│   ├── server.py                # Basic server
 │   └── strategies/
-│       ├── fedavg_baseline.py   # FedAvg baseline
 │       └── fsc_prototype.py     # Your FSC algorithm skeleton
 ├── simulation.py                # Run federated simulation
 └── experiments/
@@ -27,19 +25,41 @@ flower-fcl-sandbox/
 ## Quick Start
 
 ```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or: venv\Scripts\activate  # Windows
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install dependencies
-pip install -r requirements.txt
+# Clone and enter project
+git clone https://github.com/YOUR_USERNAME/flower-fcl-sandbox.git
+cd flower-fcl-sandbox
+
+# Create venv and install dependencies (uv does both in one step)
+uv sync
 
 # Run simulation with 5 clients
-python simulation.py --num_clients 5 --num_rounds 10
+uv run python simulation.py --num_clients 5 --num_rounds 10
 
 # Run with custom strategy
-python simulation.py --strategy fsc --num_clients 5
+uv run python simulation.py --strategy fsc --num_clients 5
+```
+
+## Alternative: Direct uv run (no explicit sync needed)
+
+```bash
+# uv will automatically create venv and install deps on first run
+uv run python simulation.py --num_clients 5 --num_rounds 10
+```
+
+## Adding Dependencies
+
+```bash
+# Add a new package
+uv add requests
+
+# Add dev dependency
+uv add --dev pytest
+
+# Add optional dependency group
+uv add --optional privacy opacus
 ```
 
 ## Learning Progression
@@ -57,10 +77,25 @@ This sandbox uses a synthetic "CKD risk" dataset with features similar to what F
 - Binary classification (high risk / low risk)
 - Non-IID splits simulate different practice populations
 
+## Running Tests
+
+```bash
+uv run pytest
+uv run pytest --cov=.  # with coverage
+```
+
+## Code Quality
+
+```bash
+uv run ruff check .     # linting
+uv run ruff format .    # formatting
+uv run mypy .           # type checking
+```
+
 ## Next Steps
 
 After mastering this sandbox:
 1. Replace synthetic data with MIMIC-IV subset
-2. Add differential privacy (Opacus integration)
+2. Add differential privacy (`uv add --optional privacy opacus`)
 3. Implement temporal distribution shift simulation
 4. Scale to multi-GPU with Flower simulation
