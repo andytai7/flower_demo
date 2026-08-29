@@ -5,7 +5,7 @@ A minimal federated learning project to experiment with Flower before implementi
 ## Project Structure
 
 ```
-flower-fcl-sandbox/
+flower_demo/
 ├── README.md
 ├── pyproject.toml               # Project config and dependencies
 ├── data/
@@ -17,9 +17,7 @@ flower-fcl-sandbox/
 ├── server/
 │   └── strategies/
 │       └── fsc_prototype.py     # Your FSC algorithm skeleton
-├── simulation.py                # Run federated simulation
-└── experiments/
-    └── run_experiment.py        # Experiment runner with logging
+└── simulation.py                # Run federated simulation
 ```
 
 ## Quick Start
@@ -29,8 +27,8 @@ flower-fcl-sandbox/
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone and enter project
-git clone https://github.com/YOUR_USERNAME/flower-fcl-sandbox.git
-cd flower-fcl-sandbox
+git clone https://github.com/andytai7/flower_demo.git
+cd flower_demo
 
 # Create venv and install dependencies (uv does both in one step)
 uv sync
